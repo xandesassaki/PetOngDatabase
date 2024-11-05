@@ -1,0 +1,16 @@
+server:
+  port: ${SYSTEM_CUSTOM_PORT}
+
+spring:
+  datasource:
+    type: org.springframework.jdbc.datasource.DriverManagerDataSource
+    url: jdbc:postgresql://${POSTGRES_URL}:${POSTGRES_PORT}/${POSTGRES_DATABASE_NAME}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    locations: classpath:${FLYWAY_CLASSPATH:db/migration}
+    enabled: true
+    baseline-on-migrate: true
+    baseline-versions: 1
+    ignore-future-migrations: false
