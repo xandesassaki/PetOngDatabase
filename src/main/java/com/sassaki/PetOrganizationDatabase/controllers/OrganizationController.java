@@ -67,7 +67,7 @@ public class OrganizationController {
     @ApiResponses(value ={
             @ApiResponse(responseCode = "200", description = "Successful Operation")
     })
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseEntity<Organization> updateOrganization(@RequestHeader Long organizationId, @RequestBody OrganizationRequestDTO  organizationRequestDTO){
         Organization updatedOrganization = organizationService.updateOrganization(organizationId, organizationRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(updatedOrganization);
