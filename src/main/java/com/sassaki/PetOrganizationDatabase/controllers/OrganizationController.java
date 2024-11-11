@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/organization")
 public class OrganizationController {
@@ -38,5 +41,25 @@ public class OrganizationController {
     public ResponseEntity<String> deleteOrganizationById(@RequestHeader Long organizationId){
         String deletedOrganization = organizationService.deleteOrganizationById(organizationId);
         return ResponseEntity.status(HttpStatus.OK).body(deletedOrganization);
+    }
+
+    @Operation(summary = "List all organization", tags ={"organization"})
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Successful Operation")
+    })
+    @GetMapping("/list-organizations")
+    public ResponseEntity<List<Organization>> listOrganizations(){
+        List<Organization> listedOrganizations = organizationService.listOrganizations();
+        return ResponseEntity.status(HttpStatus.OK).body(listedOrganizations);
+    }
+
+    @Operation(summary = "Get a organization", tags ={"organization"})
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Successful Operation")
+    })
+    @GetMapping("/get-by-id")
+    public ResponseEntity<Optional<Organization>> getOrganizationById(@RequestHeader Long organizationId){
+        Optional<Organization> getOrganizationById = organizationService.getOrganizationById(organizationId);
+        return ResponseEntity.status(HttpStatus.OK).body(getOrganizationById);
     }
 }

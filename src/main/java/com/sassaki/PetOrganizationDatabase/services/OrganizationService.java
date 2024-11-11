@@ -10,6 +10,9 @@ import com.sassaki.PetOrganizationDatabase.Repository.OrganizationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class OrganizationService {
 
@@ -59,6 +62,14 @@ public class OrganizationService {
         organizationRepository.deleteById(organizationId);
 
         return "Deleted the organizatiton: " + organizationName;
+    }
+
+    public List<Organization> listOrganizations(){
+        return organizationRepository.findAll();
+    }
+
+    public Optional<Organization> getOrganizationById(Long organizationId){
+        return organizationRepository.findById(organizationId);
     }
 
 }
