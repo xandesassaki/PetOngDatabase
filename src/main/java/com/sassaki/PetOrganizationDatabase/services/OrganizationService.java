@@ -7,6 +7,7 @@ import com.sassaki.PetOrganizationDatabase.Models.Organization;
 import com.sassaki.PetOrganizationDatabase.Repository.AddressRepository;
 import com.sassaki.PetOrganizationDatabase.Repository.DescriptionRepository;
 import com.sassaki.PetOrganizationDatabase.Repository.OrganizationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +71,36 @@ public class OrganizationService {
 
     public Optional<Organization> getOrganizationById(Long organizationId){
         return organizationRepository.findById(organizationId);
+    }
+
+    public Organization updateOrganization(Long organizationId, OrganizationRequestDTO organizationRequestDTO){
+
+        Organization oldOrganization = getOrganizationById(organizationId).get();
+
+        oldOrganization.setName(organizationRequestDTO.getName() != null ? organizationRequestDTO.getName() : oldOrganization.getName());
+        oldOrganization.setRegistrationNumber(organizationRequestDTO.getRegistrationNumber() != null ? organizationRequestDTO.getRegistrationNumber() : oldOrganization.getRegistrationNumber());
+        oldOrganization.setPhone(organizationRequestDTO.getPhone() != null ? organizationRequestDTO.getPhone() : oldOrganization.getPhone());
+        oldOrganization.setEmail(organizationRequestDTO.getEmail() != null ? organizationRequestDTO.getEmail() : oldOrganization.getEmail());
+        oldOrganization.setProfilePicture(organizationRequestDTO.getProfilePicture() != null ? organizationRequestDTO.getProfilePicture() : oldOrganization.getProfilePicture());
+        oldOrganization.setFoundationDate(organizationRequestDTO.getFoundationDate() != null ? organizationRequestDTO.getFoundationDate() : oldOrganization.getFoundationDate());
+
+        if (organizationRequestDTO.getAddress() != null) {
+            Address address = oldOrganization.getAddress();
+            address.setStreet(organizationRequestDTO.getAddress().getStreet() != null ? organizationRequestDTO.getAddress().getStreet() : address.getStreet());
+            address.setCity(organizationRequestDTO.getAddress().getCity() != null ? organizationRequestDTO.getAddress().getCity() : address.getCity());
+            address.setState(organizationRequestDTO.getAddress().getState() != null ? organizationRequestDTO.getAddress().getState() : address.getState());
+            address.setCountry(organizationRequestDTO.getAddress().getCountry() != null ? organizationRequestDTO.getAddress().getCountry() : address.getCountry());
+            address.setPostalCode(organizationRequestDTO.getAddress().getPostalCode() != null ? organizationRequestDTO.getAddress().getPostalCode() : address.getPostalCode());
+        }
+
+        if (organizationRequestDTO.getDescription() != null) {
+            Description description = oldOrganization.getDescription();
+            description.setWebsite(organizationRequestDTO.getDescription().getWebsite() != null ? organizationRequestDTO.getDescription().getWebsite() : description.getWebsite());
+            description.setSocialMedia(organizationRequestDTO.getDescription().getSocialMedia() != null ? organizationRequestDTO.getDescription().getSocialMedia() : description.getSocialMedia());
+            description.setAdditionalInfo(organizationRequestDTO.getDescription().getAdditionalInfo() != null ? organizationRequestDTO.getDescription().getAdditionalInfo() : description.getAdditionalInfo());
+        }
+
+        return organizationRepository.save(oldOrganization);
     }
 
 }

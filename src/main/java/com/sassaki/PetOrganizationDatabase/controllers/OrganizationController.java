@@ -62,4 +62,14 @@ public class OrganizationController {
         Optional<Organization> getOrganizationById = organizationService.getOrganizationById(organizationId);
         return ResponseEntity.status(HttpStatus.OK).body(getOrganizationById);
     }
+
+    @Operation(summary = "Update a organization", tags ={"organization"})
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Successful Operation")
+    })
+    @PutMapping("/update")
+    public ResponseEntity<Organization> updateOrganization(@RequestHeader Long organizationId, @RequestBody OrganizationRequestDTO  organizationRequestDTO){
+        Organization updatedOrganization = organizationService.updateOrganization(organizationId, organizationRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedOrganization);
+    }
 }
