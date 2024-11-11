@@ -52,4 +52,13 @@ public class OrganizationService {
 
         return organizationRepository.save(organization);
     }
+
+    public String deleteOrganizationById(Long organizationId){
+        String organizationName = organizationRepository.getReferenceById(organizationId).getName();
+
+        organizationRepository.deleteById(organizationId);
+
+        return "Deleted the organizatiton: " + organizationName;
+    }
+
 }

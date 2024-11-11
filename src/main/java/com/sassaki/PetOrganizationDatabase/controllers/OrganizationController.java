@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/organization")
@@ -31,5 +28,15 @@ public class OrganizationController {
         Organization organization = organizationService.createOrganization(organizationRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(organization);
+    }
+
+    @Operation(summary = "Delete a organization", tags ={"organization"})
+    @ApiResponses(value ={
+            @ApiResponse(responseCode = "200", description = "Successful Operation")
+    })
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteOrganizationById(@RequestHeader Long organizationId){
+        String deletedOrganization = organizationService.deleteOrganizationById(organizationId);
+        return ResponseEntity.status(HttpStatus.OK).body(deletedOrganization);
     }
 }
