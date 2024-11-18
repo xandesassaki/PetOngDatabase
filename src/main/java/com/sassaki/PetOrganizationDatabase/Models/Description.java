@@ -1,6 +1,6 @@
 package com.sassaki.PetOrganizationDatabase.Models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +17,6 @@ public class Description {
 
     @OneToOne
     @JoinColumn(name = "organization_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonIgnore
     private Organization organization;
 }

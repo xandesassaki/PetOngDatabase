@@ -1,6 +1,5 @@
 package com.sassaki.PetOrganizationDatabase.Models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,11 +21,9 @@ public class Organization {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    @JsonManagedReference
     private Address address;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "description_id", referencedColumnName = "id")
-    @JsonManagedReference
     private Description description;
 }
